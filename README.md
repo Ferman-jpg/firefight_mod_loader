@@ -16,8 +16,7 @@ Simple script that allows you to load mods instantly regardless of size.
 
 # Limitations (for now)
 1). Can only load ONE mod at a time, cannot merge <br>
-2). Cannot load custom maps yet, ill add it later. <br>
-3). Only for pc (idk if an android version is feasible) <br>
+2). Only for pc (idk if an android version is feasible) <br>
 
 # Issues
 If problem occurs, just remove the config file and move the 'Mod' folder back to where it came from 
