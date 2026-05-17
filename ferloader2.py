@@ -47,7 +47,7 @@ if mtl_dir.is_dir() == False: # If not
     mtl_dir.mkdir(parents = True)  # Create the folder, if folder exist it raises an error
     print("Created mod_to_load")
 # If config does not exists in main
-if fercon_dir.is_file() == False:
+if (fercon_dir.is_file() == False):
 # Create a config file inside that folder (to store the source file of each mod)
     config["origin_dirs"] = {"current_mod_origin":""}
     config["origin_dirs_mod"] = {"current_mod_Mod_folder_origin":""}
@@ -56,7 +56,30 @@ if fercon_dir.is_file() == False:
     with open("ferconfig.ini", "w") as fercon:
         config.write(fercon)
     print("Created config file")
+
+# If config is in but not complete
+elif fercon_dir.is_file() == True:
+    print("A config file is present but its contents are outdated")
+    config.read("ferconfig.ini")
+    temp_origin_value = config["origin_dirs"]["current_mod_origin"]
     
+    if "origin_dirs" not in config:
+        config["origin_dirs"] = {"current_mod_origin":temp_origin_value} # keep the previous stuff
+    if "origin_dirs_mod" not in config:
+        print("config is missing an origin_dirs_mod section")
+        config["origin_dirs_mod"] = {"current_mod_Mod_folder_origin":""}
+    if "origin_dirs_map" not in config:
+        print("config is missing an origin_dirs_map section")
+        config["origin_dirs_map"] = {"current_mod_CM_folder_origin":""}
+    if "Custom Maps" not in config:
+        print("config is missing a custom maps section")
+        config["Custom Maps"] = {"Map List":""}
+        
+    with open("ferconfig.ini", "w") as fercon:
+        config.write(fercon)
+    print("Updated the contents")
+    print("Created config file")
+        
 else: # If so
     # Abort this program!!!
     print("> The mod_to_load folder and config file already exists anyway")
@@ -262,6 +285,8 @@ for path in mtl_yourmod_path.rglob("Custom Maps"):
 # same for map folder, and return them to the complete path no?
 #should be able to work when there is an existing config file but the stuff inside is different?
 confirm_out = input("Program is done, press any key to exit. Please copy the error message if there are any and send it to the discord")
+
+
 
 
 
