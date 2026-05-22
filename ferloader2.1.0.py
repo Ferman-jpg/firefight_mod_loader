@@ -147,6 +147,15 @@ for path in mtl_yourmod_path.rglob("Mod"):  # search recursively in the yourmod 
                 print(f"Loaded {mtl_yourmod_path} / Mod to {main_dir}")
             else:
                 print("> There is no rogue Mod folder in the main directory, loading your mod...")
+                config.read("ferconfig.ini")
+                config["origin_dirs"]["current_mod_origin"] = str(mtl_yourmod_path)  #stores the path of the current mod being loaded into the config file
+                print(f"Successfully stored origin to ferconfig.ini: {config['origin_dirs']['current_mod_origin']}")
+                
+                #save the edited config file
+                with open("ferconfig.ini", "w") as fercon:  
+                    config.write(fercon)
+                print("Wrote down the return path: {mtl_yourmod_path} to the config file ")
+                                
                 shutil.move(mtl_Mod, main_dir) #If not
                 print(f"Loaded {mtl_yourmod_path} to {main_dir}")
         else:
