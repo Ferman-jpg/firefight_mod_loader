@@ -1,6 +1,10 @@
 # firefight_mod_loader
 Simple script that allows you to load mods instantly regardless of size.
 
+# NOTE: IF YOU USED THE FF TANK EDITOR BEFORE:
+  THE MOD FOLDER IN THE MAIN DIRECTORY WILL BE OVERRIDEN BY THE MOD FOLDER IN APPDATA/ROAMING/SEAN O CONNOR/FIREFIGHT/MOD
+  REMOVE THAT FOLDER OR MOVE IT ELSEWHERE TEMPORARILY IF YOU WANT THIS TO WORK  
+
 # Instructions
 1). Install the loader and move it to the same directory where firefight.exe is located (usually- \Firefight\Firefight.vx.x.x\game) <br>
 2). Open the loader, it will create a "mods_to_load" folder, extract all of your mods there. It will also generate a config file. This is how the loader knows where to put back the files of the mod that has to be unloaded <br>
