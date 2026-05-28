@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import os
 import sys
 import configparser
 
@@ -85,6 +86,68 @@ else: # If so
     print("> The mod_to_load folder and config file already exists anyway")
     
 #===========================LOAD THE MOD
+    
+#===========================CHECK IF ROAMING/SEAN OCONNORS GAMES/FIREFIGHT/MOD EXISTS
+sean_dir = Path(os.getenv("APPDATA")) / "Sean OConnors Games"
+sean_mod_dir = Path(os.getenv("APPDATA")) / "Sean OConnors Games" / "Mod"
+roaming_mod_dir = Path(os.getenv("APPDATA")) / "Sean OConnors Games" / "Firefight" / "Mod"
+
+# If there is a roaming mod===================================================
+if roaming_mod_dir.is_dir():
+    print("""
+    > A Mod folder inside AppData/Roaming/Sean OConnors Games/Firefight already exists and is overriding the one in the main directory.
+    If you're currently developing a mod using the FF Tank Editor, you might want to temporarily move the folder elsewhere. Otherwise
+    Ferloader will move it automatically outside to AppData/Roaming/Sean OConnors Games
+    
+    """)
+    user_decision = False
+    # While user tells you not to move the folder of if the folder still exists
+    while user_decision == False and roaming_mod_dir.is_dir() == True:
+        move_confirm = input("Let the program move the folder?? (yes/no): ")
+        
+        if move_confirm.lower() == "yes":
+            print("User wants to move the program automatically")
+            print(f"{sean_mod_dir.is_dir()}")
+            
+            # If a Mod Folder already exist in Sean OConnors Games
+            if sean_mod_dir.is_dir():
+                print(f"A mod folder already exist in {sean_dir}")
+                counter = 1
+                found_folder_name = False
+                while found_folder_name == False:
+                    new_folder_name =  f"Mod{counter}"
+                    
+                    # if the name is already taken
+                    if (Path(sean_dir) / new_folder_name).is_dir() == True:
+                        counter += 1
+                        print(f"{new_folder_name} is already taken, trying {roaming_mod_dir.name}{counter}")
+                    
+                    # if not, rename the folder and move it
+                    elif (Path(sean_mod_dir) / new_folder_name).is_dir() == False:
+                        print(f"{roaming_mod_dir.name}{counter} is available, renaming folder now...")
+                        os.rename(roaming_mod_dir, sean_dir / new_folder_name)  # Essentially moves the folder at the same time
+                        print(f"Folder is renamed {roaming_mod_dir}, trying to move to {sean_dir} now")
+                        found_folder_name = True
+                    else:
+                        print("Unknown Error")
+                user_decision == True # MOVE DOWN FOR ERROR HANDLING??
+                # If mod folder is found in the Sean O Connors Games directory
+            
+            # If the Sean OConnor Games directory is clear
+            elif not sean_mod_dir.is_dir():
+                print("Preparing to move")
+                shutil.move(roaming_mod_dir, sean_dir)  # move it outside
+                found_folder_name = True
+                
+                            
+        elif move_confirm.lower() == "no":
+            user_decision == False
+        else:
+            print("Not a valid answer.")
+    
+#===============================================================  
+
+    
 print("")
 # get the target mod, create a path object that leads to the target mod's folder
 trg_mod = input("Enter the name of the mod you want to load: ")  #name of the folder of the target mod
