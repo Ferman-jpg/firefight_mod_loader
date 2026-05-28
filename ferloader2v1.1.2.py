@@ -52,7 +52,6 @@ if mtl_dir.is_dir() == False: # If not
 if (fercon_dir.is_file() == False):
 # Create a config file inside that folder (to store the source file of each mod)
     config["origin_dirs"] = {"current_mod_origin":""}
-    config["origin_dirs_mod"] = {"current_mod_Mod_folder_origin":""}
     config["origin_dirs_map"] = {"current_mod_CM_folder_origin":""}
     config["Custom Maps"] = {"Map List":""}
     with open("ferconfig.ini", "w") as fercon:
